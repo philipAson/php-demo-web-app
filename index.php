@@ -3,9 +3,15 @@
 require 'functions.php';
 require 'Database.php';
 
+$config = require 'config.php';
 
-$db = new Database();
 
-$post = $db->query("select * from posts where id = 1")->fetch(PDO::FETCH_ASSOC);
+$db = new Database($config['database']);
+
+$id = $_GET['id'];
+$query = "select * from posts where id = :id";
+
+$post = $db->query($query, [':id' => $id])->fetch();
+
 
 dd($post);
